@@ -73,6 +73,7 @@ namespace ProjetoFinalAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ServiceFilter(typeof(EventExistsActionFilter))]
+        //[AllowAnonymous]
         [Authorize(Roles = "admin")]
         public ActionResult<CityEvent> InsertCityEvent(CityEvent cityEvent)
         {

@@ -13,6 +13,7 @@ namespace ProjetoFinalAPI.Core.Models
         public string PersonName { get; set; }
 
         [Required(ErrorMessage = "Quantidade obrigatória")]
+        [Range(0, double.MaxValue, ErrorMessage = "O valor deve ser positivo")]
         public long Quantity { get; set; }
     }
 }

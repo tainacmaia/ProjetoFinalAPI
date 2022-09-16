@@ -22,6 +22,7 @@ namespace ProjetoFinalAPI.Core.Models
 
         public string? Address { get; set; }
 
+        [Range(0, double.MaxValue, ErrorMessage = "O valor deve ser positivo")]
         public decimal? Price { get; set; }
 
         public bool Status { get; set; } = true;
