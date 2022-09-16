@@ -28,20 +28,6 @@ namespace ProjetoFinalAPI.Core.Services
         }
         public bool UpdateEventReservation(long reservationId, long quantity)
         {
-            //try
-            //{
-            //    eventReservation = null;
-            //    eventReservation.IdReservation = idReservation;
-            //}
-            //catch (Exception ex)
-            //{
-            //    var tipoExcecao = ex.GetType().Name;
-            //    var mensagem = ex.Message;
-            //    var caminho = ex.InnerException.StackTrace;
-
-            //    Console.WriteLine($"Tipo da Exceção: {tipoExcecao}, Mensagem: {mensagem}, Stack Trace: {caminho}");
-            //    return false;
-            //}
 
             return _eventReservationRepository.UpdateEventReservation(reservationId, quantity);
         }

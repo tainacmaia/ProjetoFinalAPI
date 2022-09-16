@@ -20,7 +20,8 @@ namespace ProjetoFinalAPI.Filters
             var cityEvent = context.ActionArguments["cityEvent"] as CityEvent;
             if (_cityEventService.GetCityEvent().Any(x => (x.Title == cityEvent.Title &&
                                                            x.DateHourEvent == cityEvent.DateHourEvent &&
-                                                           x.Local == cityEvent.Local)))
+                                                           x.Local == cityEvent.Local &&
+                                                           x.Status == cityEvent.Status)))
             {
                 context.Result = new StatusCodeResult(StatusCodes.Status409Conflict);
                 problem.Status = 409;

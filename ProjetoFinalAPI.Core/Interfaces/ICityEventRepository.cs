@@ -9,7 +9,7 @@ namespace ProjetoFinalAPI.Core.Interfaces
         List<CityEvent> GetCityEventByLocalAndDate(string local, DateTime dateHourEvent);
         List<CityEvent> GetCityEventByPriceAndDate(decimal min, decimal max, DateTime dateHourEvent);
         bool InsertCityEvent(CityEvent cityEvent);
-        bool UpdateCityEvent(long idEvent, CityEvent cityEvent);
+        bool UpdateCityEvent(CityEvent cityEvent);
         bool DeleteCityEvent(long idEvent);
 
     }

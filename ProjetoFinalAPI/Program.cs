@@ -71,6 +71,7 @@ builder.Services.AddScoped<IEventReservationService, EventReservationService>();
 builder.Services.AddScoped<EventExistsActionFilter>();
 builder.Services.AddScoped<IdReservationExistsActionFilter>();
 builder.Services.AddScoped<ReservationExistsActionFilter>();
+builder.Services.AddScoped<EventIsActiveActionFilter>();
 
 var app = builder.Build();
 

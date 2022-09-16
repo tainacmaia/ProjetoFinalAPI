@@ -49,6 +49,7 @@ namespace ProjetoFinalAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ServiceFilter(typeof(ReservationExistsActionFilter))]
+        [ServiceFilter(typeof(EventIsActiveActionFilter))]
         [Authorize(Roles = "cliente, admin")]
         public ActionResult<EventReservation> InsertEventReservation(EventReservation eventReservation)
         {

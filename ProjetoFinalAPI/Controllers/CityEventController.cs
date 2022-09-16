@@ -73,8 +73,7 @@ namespace ProjetoFinalAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ServiceFilter(typeof(EventExistsActionFilter))]
-        [AllowAnonymous]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public ActionResult<CityEvent> InsertCityEvent(CityEvent cityEvent)
         {
             if (!_cityEventService.InsertCityEvent(cityEvent))
@@ -87,11 +86,10 @@ namespace ProjetoFinalAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ServiceFilter(typeof(EventExistsActionFilter))]
-        [AllowAnonymous]
-        //[Authorize(Roles = "admin")]
-        public IActionResult UpdateCityEvent(long id, CityEvent cityEvent)
+        [Authorize(Roles = "admin")]
+        public IActionResult UpdateCityEvent(CityEvent cityEvent)
         {
-            if (!_cityEventService.UpdateCityEvent(id, cityEvent))
+            if (!_cityEventService.UpdateCityEvent(cityEvent))
                 return BadRequest("Não foi possível realizar a atualização.");
             return NoContent();
         }
@@ -99,8 +97,7 @@ namespace ProjetoFinalAPI.Controllers
         [HttpDelete("/CityEvent/Delete")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [AllowAnonymous]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public ActionResult<List<CityEvent>> DeleteCityEvent(long id)
         {
             if (!_cityEventService.DeleteCityEvent(id))

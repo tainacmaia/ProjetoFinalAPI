@@ -74,13 +74,13 @@ namespace ProjetoFinalAPI.Infra.Data.Repositories
                 cityEvent.Local,
                 cityEvent.Address,
                 cityEvent.Price,
-                cityEvent.Status,
+                cityEvent.Status
             });
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
             return conn.Execute(query, parameters) == 1;
         }
-        public bool UpdateCityEvent(long idEvent, CityEvent cityEvent)
+        public bool UpdateCityEvent(CityEvent cityEvent)
         {
             var query = "UPDATE CityEvent SET Title = @Title, Description = @Description, DateHourEvent = @DateHourEvent, " +
                 "Local = @Local, Address = @Address, Price = @Price, Status = @Status WHERE IdEvent = @IdEvent";

@@ -15,7 +15,7 @@ namespace ProjetoFinalAPI.Core.Models
 
         [Required(ErrorMessage = "Data e Hora obrigatórios")]
         [CustomDateRange(ErrorMessage = "Digite uma data atual ou futura")]
-        public DateTime DateHourEvent { get; set; }
+        public DateTime? DateHourEvent { get; set; }
 
         [Required(ErrorMessage = "Local obrigatório")]
         public string Local { get; set; }
@@ -24,7 +24,6 @@ namespace ProjetoFinalAPI.Core.Models
 
         public decimal? Price { get; set; }
 
-        [Required(ErrorMessage = "Status obrigatório")]
-        public bool Status { get; set; }
+        public bool Status { get; set; } = true;
     }
 }

@@ -36,24 +36,9 @@ namespace ProjetoFinalAPI.Core.Services
         {
             return _cityEventRepository.InsertCityEvent(cityEvent);
         }
-        public bool UpdateCityEvent(long idEvent, CityEvent cityEvent)
+        public bool UpdateCityEvent(CityEvent cityEvent)
         {
-            //try
-            //{
-            //    cityEvent = null;
-            //    cityEvent.IdEvent = idEvent;
-            //}
-            //catch (Exception ex)
-            //{
-            //    var tipoExcecao = ex.GetType().Name;
-            //    var mensagem = ex.Message;
-            //    var caminho = ex.InnerException.StackTrace;
-
-            //    Console.WriteLine($"Tipo da Exceção: {tipoExcecao}, Mensagem: {mensagem}, Stack Trace: {caminho}");
-            //    return false;
-            //}
-
-            return _cityEventRepository.UpdateCityEvent(idEvent, cityEvent);
+            return _cityEventRepository.UpdateCityEvent(cityEvent);
         }
 
         public bool DeleteCityEvent(long idEvent)
@@ -64,7 +49,7 @@ namespace ProjetoFinalAPI.Core.Services
             var cityEventList = _cityEventRepository.GetCityEvent().ToList();
             var deactivate = cityEventList.FirstOrDefault(x => x.IdEvent == idEvent);
             deactivate.Status = false;
-            return _cityEventRepository.UpdateCityEvent(idEvent, deactivate);
+            return _cityEventRepository.UpdateCityEvent(deactivate);
         }
     }
 }
