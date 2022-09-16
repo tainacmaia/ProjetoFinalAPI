@@ -1,5 +1,5 @@
 # Módulo de Programação Web III - Projeto Final 
-(Let’s Code from Ada)
+### (by Let’s Code from Ada - Professora Amanda Mantovani)
 
 Construa uma API que registre e manipule eventos que acontecem na cidade, como shows, peças de teatro, eventos especiais em restaurantes, entre outros.
 
@@ -46,4 +46,23 @@ Utilize para autenticação os seguintes parametros:
 Audience = "APIEvents.com"
 Issuer = "APIClientes.com"
 key = "he0ErCNloe4J7Id0Ry2SEDg09lKkZkfsRiGsdX_vgEg"
+```
+
+## IMPORTANTE
+- Para utilizar o programa você precisa de uma chave única e um token de acesso. Caso não possua ou não deseje utilizá-los, comente as linhas do programa que solicitam autorização, como ```app.UseAuthentication()``` da Program e as que apresentam ```[Authorize]``` nas Controllers.
+
+- Para obter as informações da base de dados como feito no programa, é necessário criar um arquivo *appsettings.json* contendo nome do servidor, base de dados, seu login e senha, conforme exemplo:
+```
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server= NomeDoServidor; Database=NomeDoDataBase; User Id=SeuLogin; Password=SuaSenha; Encrypt=False"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+}
 ```
