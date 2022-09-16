@@ -30,6 +30,7 @@ namespace ProjetoFinalAPI.Filters
                     problem.Title = "Erro inesperado no sistema.";
                     context.Result = new ObjectResult(problem);
                     break;
+
                 default:
                     context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
                     problem.Status = 500;

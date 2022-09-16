@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjetoFinalAPI.Core.Interfaces;
 using ProjetoFinalAPI.Core.Models;
+using ProjetoFinalAPI.Filters;
 
 namespace ProjetoFinalAPI.Controllers
 {
@@ -16,14 +17,13 @@ namespace ProjetoFinalAPI.Controllers
 
         public EventReservationController(IEventReservationService eventReservationService)
         {
-            Console.WriteLine("Instanciando EventReservation Controller");
             _eventReservationService = eventReservationService;
         }
 
         [HttpGet("/EventReservation/GetAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [AllowAnonymous]
+        [Authorize(Roles = "cliente, admin")]
         public ActionResult<List<EventReservation>> GetEventReservation()
         {
             var eventReservation = _eventReservationService.GetEventReservation;
@@ -48,6 +48,7 @@ namespace ProjetoFinalAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ServiceFilter(typeof(ReservationExistsActionFilter))]
         [Authorize(Roles = "cliente, admin")]
         public ActionResult<EventReservation> InsertEventReservation(EventReservation eventReservation)
         {
@@ -60,10 +61,11 @@ namespace ProjetoFinalAPI.Controllers
         [HttpPut("/EventReservation/Update")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ServiceFilter(typeof(IdReservationExistsActionFilter))]
         [Authorize(Roles = "admin")]
-        public IActionResult UpdateEventReservation(long id, EventReservation eventReservation)
+        public IActionResult UpdateEventReservation(long id, long quantity)
         {
-            if (!_eventReservationService.UpdateEventReservation(id, eventReservation))
+            if (!_eventReservationService.UpdateEventReservation(id, quantity))
                 return NotFound("Reserva não encontrada.");
 
             return NoContent();
@@ -72,6 +74,7 @@ namespace ProjetoFinalAPI.Controllers
         [HttpDelete("/EventReservation/Delete")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ServiceFilter(typeof(IdReservationExistsActionFilter))]
         [Authorize(Roles = "admin")]
         public ActionResult<List<EventReservation>> DeleteEventReservation(long id)
         {

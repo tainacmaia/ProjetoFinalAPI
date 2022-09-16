@@ -28,7 +28,7 @@ namespace ProjetoFinalAPI.Controllers
         {
             var cityEvent = _cityEventService.GetCityEvent;
             if (cityEvent == null)
-                return NotFound("Não há clientes cadastrados.");
+                return NotFound("Não há eventos cadastrados.");
             return Ok(_cityEventService.GetCityEvent());
         }
 
@@ -72,7 +72,9 @@ namespace ProjetoFinalAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        [Authorize(Roles = "admin")]
+        [ServiceFilter(typeof(EventExistsActionFilter))]
+        [AllowAnonymous]
+        //[Authorize(Roles = "admin")]
         public ActionResult<CityEvent> InsertCityEvent(CityEvent cityEvent)
         {
             if (!_cityEventService.InsertCityEvent(cityEvent))
@@ -83,23 +85,26 @@ namespace ProjetoFinalAPI.Controllers
 
         [HttpPut("/CityEvent/Update")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Authorize(Roles = "admin")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ServiceFilter(typeof(EventExistsActionFilter))]
+        [AllowAnonymous]
+        //[Authorize(Roles = "admin")]
         public IActionResult UpdateCityEvent(long id, CityEvent cityEvent)
         {
             if (!_cityEventService.UpdateCityEvent(id, cityEvent))
-                return NotFound("Não foi possível realizar a atualização.");
+                return BadRequest("Não foi possível realizar a atualização.");
             return NoContent();
         }
 
         [HttpDelete("/CityEvent/Delete")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Authorize(Roles = "admin")]
+        [AllowAnonymous]
+        //[Authorize(Roles = "admin")]
         public ActionResult<List<CityEvent>> DeleteCityEvent(long id)
         {
             if (!_cityEventService.DeleteCityEvent(id))
-                return NotFound();
+                return NotFound("Não foi encontrado nenhum evento com o ID informado.");
             return NoContent();
         }
     }

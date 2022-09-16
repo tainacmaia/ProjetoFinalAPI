@@ -68,6 +68,9 @@ builder.Services.AddScoped<ICityEventRepository, CityEventRepository>();
 builder.Services.AddScoped<ICityEventService, CityEventService>();
 builder.Services.AddScoped<IEventReservationRepository, EventReservationRepository>();
 builder.Services.AddScoped<IEventReservationService, EventReservationService>();
+builder.Services.AddScoped<EventExistsActionFilter>();
+builder.Services.AddScoped<IdReservationExistsActionFilter>();
+builder.Services.AddScoped<ReservationExistsActionFilter>();
 
 var app = builder.Build();
 

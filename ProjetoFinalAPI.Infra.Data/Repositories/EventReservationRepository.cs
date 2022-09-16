@@ -25,9 +25,9 @@ namespace ProjetoFinalAPI.Infra.Data.Repositories
 
         public List<EventReservation> GetEventReservationByPersonNameAndTitle(string personName, string title)
         {
-            var query = @$"SELECT * FROM EventReservation AS e INNER JOIN CityEvent AS c ON
-                        e.PersonName = @PersonName AND c.Title LIKE ('%' + @Title '%') AND 
-                        e.IdEvent = c.IdEvent ";
+            var query = @$"SELECT * FROM EventReservation e INNER JOIN CityEvent c ON
+                        e.PersonName = @PersonName AND c.Title LIKE ('%' + @Title + '%')
+                        WHERE e.IdEvent = c.IdEvent";
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
             var parameters = new DynamicParameters(new 
             { 
@@ -52,13 +52,14 @@ namespace ProjetoFinalAPI.Infra.Data.Repositories
 
             return conn.Execute(query, parameters) == 1;
         }
-        public bool UpdateEventReservation(long reservationId, EventReservation eventReservation)
+        public bool UpdateEventReservation(long idReservation, long quantity)
         {
             var query = "UPDATE EventReservation SET Quantity = @Quantity WHERE IdReservation = @IdReservation";
 
             var parameters = new DynamicParameters(new
             {
-                eventReservation.Quantity
+                idReservation,
+                quantity
             });
 
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));

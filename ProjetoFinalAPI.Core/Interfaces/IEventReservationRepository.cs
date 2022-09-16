@@ -7,7 +7,7 @@ namespace ProjetoFinalAPI.Core.Interfaces
         List<EventReservation> GetEventReservation();
         List<EventReservation> GetEventReservationByPersonNameAndTitle(string personName, string title);
         bool InsertEventReservation(EventReservation eventReservation);
-        bool UpdateEventReservation(long idEventReservation, EventReservation eventReservation);
+        bool UpdateEventReservation(long reservationId, long quantity);
         bool DeleteEventReservation(long idEventReservation);
     }
 }

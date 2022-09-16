@@ -1,5 +1,6 @@
 ﻿using ProjetoFinalAPI.Core.CustomAttributes;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ProjetoFinalAPI.Core.Models
 {
