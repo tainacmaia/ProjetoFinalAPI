@@ -17,48 +17,81 @@ namespace ProjetoFinalAPI.Infra.Data.Repositories
         public List<CityEvent> GetCityEvent()
         {
             var query = "SELECT*FROM CityEvent";
-
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Query<CityEvent>(query).ToList();
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Query<CityEvent>(query).ToList();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
 
         public List<CityEvent> GetCityEventByTitle(string title)
         {
-            
+
             var query = $"SELECT * FROM CityEvent WHERE Title LIKE ('%' +  @Title + '%') ";
-            var parameters = new DynamicParameters (new 
-            { 
-                title 
+            var parameters = new DynamicParameters(new
+            {
+                title
             });
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-            return conn.Query<CityEvent>(query, parameters).ToList();
+
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Query<CityEvent>(query, parameters).ToList();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
 
         public List<CityEvent> GetCityEventByLocalAndDate(string local, DateTime dateHourEvent)
         {
             var query = "SELECT * FROM CityEvent WHERE Local LIKE ('%'+ @Local + '%') AND CONVERT(DATE, DateHourEvent)= @DateHourEvent";
-            var parameters = new DynamicParameters(new 
-            { 
-                local, 
-                dateHourEvent 
+            var parameters = new DynamicParameters(new
+            {
+                local,
+                dateHourEvent
             });
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-            return conn.Query<CityEvent>(query, parameters).ToList();
-            
+
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Query<CityEvent>(query, parameters).ToList();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
+
         }
 
         public List<CityEvent> GetCityEventByPriceAndDate(decimal min, decimal max, DateTime dateHourEvent)
         {
             var query = "SELECT * FROM CityEvent WHERE Price >= @min AND Price <= @max AND CONVERT(DATE, DateHourEvent)= @DateHourEvent";
-            var parameters = new DynamicParameters (new 
-            { 
-                min, 
-                max, 
-                dateHourEvent 
+            var parameters = new DynamicParameters(new
+            {
+                min,
+                max,
+                dateHourEvent
             });
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-            return conn.Query<CityEvent>(query, parameters).ToList();
+
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Query<CityEvent>(query, parameters).ToList();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
 
         public bool InsertCityEvent(CityEvent cityEvent)
@@ -76,9 +109,17 @@ namespace ProjetoFinalAPI.Infra.Data.Repositories
                 cityEvent.Price,
                 cityEvent.Status
             });
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            return conn.Execute(query, parameters) == 1;
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
         public bool UpdateCityEvent(CityEvent cityEvent)
         {
@@ -87,22 +128,36 @@ namespace ProjetoFinalAPI.Infra.Data.Repositories
 
             var parameters = new DynamicParameters(cityEvent);
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Execute(query, parameters) == 1;
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
         public bool DeleteCityEvent(long idEvent)
         {
             var query = "DELETE FROM CityEvent WHERE IdEvent = @IdEvent";
 
-            var parameters = new DynamicParameters (new
+            var parameters = new DynamicParameters(new
             {
                 idEvent
             });
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Execute(query, parameters) == 1;
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
     }
 }

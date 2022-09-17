@@ -18,9 +18,16 @@ namespace ProjetoFinalAPI.Infra.Data.Repositories
         {
             var query = "SELECT*FROM EventReservation";
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Query<EventReservation>(query).ToList();
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Query<EventReservation>(query).ToList();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
 
         public List<EventReservation> GetEventReservationByPersonNameAndTitle(string personName, string title)
@@ -28,13 +35,22 @@ namespace ProjetoFinalAPI.Infra.Data.Repositories
             var query = @$"SELECT * FROM EventReservation e INNER JOIN CityEvent c ON
                         e.PersonName = @PersonName AND c.Title LIKE ('%' + @Title + '%')
                         WHERE e.IdEvent = c.IdEvent";
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            
             var parameters = new DynamicParameters(new 
             { 
                 title, 
                 personName 
             });
-            return conn.Query<EventReservation>(query, parameters).ToList();
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Query<EventReservation>(query, parameters).ToList();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
 
         public bool InsertEventReservation(EventReservation eventReservation)
@@ -48,9 +64,16 @@ namespace ProjetoFinalAPI.Infra.Data.Repositories
                 eventReservation.Quantity
             });
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Execute(query, parameters) == 1;
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
         public bool UpdateEventReservation(long idReservation, long quantity)
         {
@@ -62,9 +85,16 @@ namespace ProjetoFinalAPI.Infra.Data.Repositories
                 quantity
             });
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Execute(query, parameters) == 1;
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
         public bool DeleteEventReservation(long idReservation)
         {
@@ -75,9 +105,16 @@ namespace ProjetoFinalAPI.Infra.Data.Repositories
                 idReservation
             });
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Execute(query, parameters) == 1;
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
     }
 }

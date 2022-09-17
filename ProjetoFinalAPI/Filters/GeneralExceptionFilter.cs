@@ -12,7 +12,7 @@ namespace ProjetoFinalAPI.Filters
             {
                 Status = 500,
                 Title = "Erro Inesperado",
-                Detail = "Ocorreu um erro inesperado na solicitação",
+                Detail = "Ocorreu um erro inesperado na solicitação.",
                 Type = context.Exception.GetType().Name
             };
 
